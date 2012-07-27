@@ -16,6 +16,8 @@ To build, simply extract it anywhere and run:
     GOPATH=`pwd` go build grace.go
     ./grace
 
+(So far, Linux only)
+
 Check `grace.go` for basic usage info.
 
 Questions?  @yan / yan@srtd.org
