@@ -118,20 +118,20 @@ func Attach(pid int) (proc *Process, err error) {
 // Note, the process does not begin executing main() until after StartExecutable
 // is called.
 func LoadExecutable(binaryName string, args []string) (proc *Process, err error) {
-	if _, ok := os.Stat(binaryName); ok != nil {
-		proc, err = nil, &os.PathError{"LoadExecutable", binaryName, ok}
-		return
-	}
+  if _, ok := os.Stat(binaryName); ok != nil {
+    proc, err = nil, &os.PathError{"LoadExecutable", binaryName, ok}
+    return
+  }
 
   var started *os.Process
-	attr := &os.ProcAttr{
+  attr := &os.ProcAttr{
     Files: []*os.File{os.Stdin, os.Stdout, os.Stderr},
     Sys: &syscall.SysProcAttr{ Ptrace: true, },
   }
-	if p, ok := os.StartProcess(binaryName, args, attr); ok != nil {
-		proc, err = nil, &os.PathError{"LoadExecutable", binaryName, ok}
-		return
-	} else {
+  if p, ok := os.StartProcess(binaryName, args, attr); ok != nil {
+    proc, err = nil, &os.PathError{"LoadExecutable", binaryName, ok}
+    return
+  } else {
     started = p
   }
 
@@ -142,6 +142,6 @@ func LoadExecutable(binaryName string, args []string) (proc *Process, err error)
   proc.DebugSymbols, err = ExtractSymbolTable(binaryName, 0)
   proc.Breakpoints = []*Breakpoint{}
 
-	return
+  return
 }
 
